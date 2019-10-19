@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { List, ListItem } from "../components/List";
+import {Row, Col} from "../components/Grid";
+import EmptyList from "../components/EmptyList";
+import RemoveBookBtn from "../components/RemoveBookBtn";
 import axios from "axios";
 
 class Saved extends Component {
     state = {
-        savedBooks = [],
-        initialized = true
+        savedBooks: [],
+        initialized: true
     }
-}
 
-//componentDidMount() {
-    //something.loadSavedBooks?
-//}
+componentDidMount() {
+    this.getSavedBooks()}
 
 
 
@@ -23,23 +24,43 @@ getSavedBooks = () => {
       .catch((err => console.log(err)))
   }
 
-  //handleDeleteBooks =  (req, res) => {
-  // api.deleteBook("/api/books/${id}").then(res) => this.getSavedBooks
-  // req.params.id;  }
+  deleteFromDB =  id => {
+    console.log(id);
+  }
 
   render() {
     return (
       <div>
-        <List>
+        <Row>
+          <Col size="md-12">
+            {this.state.savedBooks.length > 0 ?
+              <List>
+                {this.state.savedBooks.map(book => {
+                  console.log(book)
+                  return (
+                    <div>
+                      <ListItem
+                        key={book._id}
+                        authors={book.authors}
+                        title={book.title}
+                        synopsis={book.synopsis}
+                      />
+                      <RemoveBookBtn
+                        onClick={() => this.deleteFromDB(book._id)}
+                      />
+                    </div>
+                  )
 
-        </List>
+                })}
+              </List>
+              :
+              <EmptyList />
+            }
+          </Col>
+        </Row>
       </div>
-    )
-
+    );
   }
-
-
-
-
+}
 
 export default Saved;

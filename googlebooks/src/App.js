@@ -1,6 +1,6 @@
 import React from 'react';
-import Books from "./pages/Books";
-//import Saved from "./pages/Saved";
+import Search from "./pages/Search";
+import Saved from "./pages/Saved";
 //import Detail from "./pages/Detail";
 //import noMatch from "./pages/noMatch";
 //import './App.css';
@@ -8,7 +8,8 @@ import Books from "./pages/Books";
 function App() {
   return (
     <div>
-      <Books />
+      <Search />
+      <Saved />
 
      
     </div>

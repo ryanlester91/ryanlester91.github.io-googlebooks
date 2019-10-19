@@ -6,7 +6,7 @@ import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../components/List";
 import axios from "axios";
-//import { Input, TextArea, FormBtn } from "../components/Form";
+import { Input } from "../components/Input";
 
 class Search extends Component {
   state = {
@@ -24,29 +24,28 @@ class Search extends Component {
   };
 
   searchBooks = () => {
-    
+    let url = `https://www.googleapis.com/books/v1/volumes?q=${
+      this.state.query
+    }`;    
     axios
       .get(url)
       .then(res => {    
     this.displayRes( res.data )
-      )
+      })
       .catch(err => console.log(err));
   };
 
-  deleteBook = id => {
-    API.deleteBook(id)
-      .then(res => this.loadBooks())
-      .catch(err => console.log(err));
-  };
+  
 
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
       [name]: value
     });
+    console.log("Query", this.state.query);
   };
 
-  handleFormSubmit = event => {
+  /*handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.title && this.state.author) {
       API.saveBook({
@@ -57,11 +56,13 @@ class Search extends Component {
         .then(res => this.loadBooks())
         .catch(err => console.log(err));
     }
-  };
+  };*/
 
   render() {
     return (
-      
+          <div>
+          <Form />
+        
             //{this.state.books.length ? (
               <List>
                 {this.state.books.map(book => (
@@ -71,10 +72,16 @@ class Search extends Component {
                         {book.title} by {book.author}
                       </strong>
                     </Link>
+                    <AddBookBtn 
+                    authors={book.volumeInfo.authors ? book.volumeInfo.authors : ["No Author Available"]}
+                    title={book.volumeInfo.title}
+                    synopsis={book.volumeInfo.description ? 
+                      book.volumeInfo.description : "No Description Available"} />
                     <RemoveBookBtn onClick={() => this.deleteBook(book._id)} />
                   </ListItem>
                 ))}
               </List>
+              </div>
             ) 
             //: (
               //<h3>No Results to Display</h3>
