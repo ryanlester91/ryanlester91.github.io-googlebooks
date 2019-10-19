@@ -1,27 +1,34 @@
 import React, { Component } from "react";
 import RemoveBookBtn from "../components/RemoveBookBtn";
+//import AddBookBtn from "../components/AddBookBtn";
 //import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "../components/List";
+import axios from "axios";
 //import { Input, TextArea, FormBtn } from "../components/Form";
 
-class Books extends Component {
+class Search extends Component {
   state = {
-    books: [],
-    title: "",
-    author: "",
-    synopsis: ""
+    searchRes: [],
+    query: "",
+    books: []
   };
 
-  componentDidMount() {
+  /*componentDidMount() {
     this.loadBooks();
-  }
+  }*/
 
-  loadBooks = () => {
-    API.getBooks()
-      .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
+  displayRes = data => {
+    this.setState({ books: data.items });
+  };
+
+  searchBooks = () => {
+    
+    axios
+      .get(url)
+      .then(res => {    
+    this.displayRes( res.data )
       )
       .catch(err => console.log(err));
   };
