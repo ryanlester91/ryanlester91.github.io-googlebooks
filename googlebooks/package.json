@@ -2,7 +2,12 @@
   "name": "googlebooks",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "6.10.2",
+    "node": "10.15.3"
+  },
   "dependencies": {
+    "axios": "^0.19.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0"
