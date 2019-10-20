@@ -36,20 +36,20 @@ getSavedBooks = () => {
             {this.state.savedBooks.length > 0 ?
               <List>
                 {this.state.savedBooks.map(book => {
-                  console.log(book)
-                  return (
+                  console.log(book);
+                  return(
                     <div>
-                      <ListItem
+                      <ListItem>
                         key={book._id}
                         authors={book.authors}
                         title={book.title}
                         synopsis={book.synopsis}
-                      />
-                      <RemoveBookBtn
-                        onClick={() => this.deleteFromDB(book._id)}
-                      />
-                    </div>
-                  )
+                      </ListItem>
+                      <RemoveBookBtn onClick={() => this.deleteFromDB(book._id)} />
+                      </div>
+                )
+
+                  
 
                 })}
               </List>

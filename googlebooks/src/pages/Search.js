@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import RemoveBookBtn from "../components/RemoveBookBtn";
-//import AddBookBtn from "../components/AddBookBtn";
+import AddBookBtn from "../components/AddBookBtn";
 //import Jumbotron from "../components/Jumbotron";
-import API from "../utils/API";
-import { Link } from "react-router-dom";
+//import API from "../utils/API";
+//import { Link } from "react-router-dom";
 import { List, ListItem } from "../components/List";
+import EmptyList from "../components/EmptyList";
 import axios from "axios";
-import { Input } from "../components/Input";
+//import Input  from "../components/Input";
+import {Row, Col} from "../components/Grid";
 
 class Search extends Component {
   state = {
@@ -60,34 +61,48 @@ class Search extends Component {
 
   render() {
     return (
-          <div>
-          <Form />
-        
-            //{this.state.books.length ? (
-              <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
-                      <strong>
-                        {book.title} by {book.author}
-                      </strong>
-                    </Link>
-                    <AddBookBtn 
-                    authors={book.volumeInfo.authors ? book.volumeInfo.authors : ["No Author Available"]}
-                    title={book.volumeInfo.title}
-                    synopsis={book.volumeInfo.description ? 
-                      book.volumeInfo.description : "No Description Available"} />
-                    <RemoveBookBtn onClick={() => this.deleteBook(book._id)} />
-                  </ListItem>
-                ))}
-              </List>
+      <Row>
+        <Col size="md-12">
+        <div>
+          <input id="bookQ" className="form-control form-control-lg" autoComplete="off" type="text" name="query" onChange={this.handleInput} />
+          <button  type="submit" onClick={this.searchBooks} >
+            Search for Books
+          </button>
+                   
+
+          {(this.state.books && this.state.books.length > 0) ? 
+          <List>
+          {this.state.books.map(book => {
+            return (
+              <div>
+              <ListItem
+              key={book.id} 
+              authors={book.volumeInfo.authors ? book.volumeInfo.authors : ["No Author Available"]}
+              title={book.volumeInfo.title}
+              synopsis={book.volumeInfo.description ? 
+                book.volumeInfo.description : "No Description Available"}
+              
+              />
+
+              <AddBookBtn
+              authors={book.volumeInfo.authors ? book.volumeInfo.authors : ["No Author Available"]}
+              title={book.volumeInfo.title}
+              synopsis={book.volumeInfo.description ? 
+                book.volumeInfo.description : "No Description Available"}
+              
+              />
               </div>
-            ) 
-            //: (
-              //<h3>No Results to Display</h3>
-            //)}
-    
-            //})
+            )
+          })}
+          </List>
+          : 
+          <EmptyList/>         
+          }
+          
+        </div>
+        </Col>
+      </Row>
+    );
+  }
 }
-}
-export default Books;
+export default Search;
